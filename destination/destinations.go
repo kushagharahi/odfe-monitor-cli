@@ -25,7 +25,7 @@ import (
 
 	"github.com/mihirsoni/odfe-monitor-cli/es"
 	"github.com/pkg/errors"
-	"gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v2"
 )
 
 //FileName where destinations are stored and read from

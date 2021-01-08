@@ -17,12 +17,13 @@ package monitor
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
 	mapset "github.com/deckarep/golang-set"
-	"github.com/mihirsoni/odfe-monitor-cli/es"
 	"github.com/mihirsoni/odfe-monitor-cli/destination"
+	"github.com/mihirsoni/odfe-monitor-cli/es"
 	"github.com/pkg/errors"
 )
 
@@ -52,6 +53,7 @@ func GetAllRemote(esClient es.Client, destinationsMap map[string]destination.Des
 			return nil, nil, errors.Wrap(err, "Invalid remote JSON document")
 		}
 		json.Unmarshal(parsedMonitor, &monitor)
+
 		monitor.id = hit.(map[string]interface{})["_id"].(string)
 		// Old version doesn't have primary term or seq_no
 		if esClient.OdVersion > 0 {
@@ -71,6 +73,7 @@ func GetAllRemote(esClient es.Client, destinationsMap map[string]destination.Des
 				monitor.Triggers[index].Actions[k].Subject = monitor.Triggers[index].Actions[k].SubjectTemplate.Source
 				monitor.Triggers[index].Actions[k].Message = monitor.Triggers[index].Actions[k].MessageTemplate.Source
 				monitor.Triggers[index].Actions[k].DestinationID = destintionName
+				fmt.Println(monitor.Triggers[index].Actions[k].Message)
 			}
 		}
 		remoteMonitorsSet.Add(monitor.Name)
@@ -258,4 +261,4 @@ func mapIDAsKey(m map[string]destination.Destination) map[string]destination.Des
 		n[v.ID] = v
 	}
 	return n
-} 
+}

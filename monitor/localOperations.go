@@ -22,7 +22,7 @@ import (
 
 	mapset "github.com/deckarep/golang-set"
 	"github.com/pkg/errors"
-	"gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v2"
 )
 
 //GetAllLocal Parse all local monitors under rootDir
@@ -62,7 +62,7 @@ func GetAllLocal(rootDir string) (map[string]Monitor, mapset.Set, error) {
 		}
 		monitorsSet.Add(monitor.Name)
 		monitorsMap[monitor.Name] = monitor
-		
+
 	}
 	return monitorsMap, monitorsSet, nil
 }

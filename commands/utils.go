@@ -20,7 +20,7 @@ import (
 
 	"github.com/mihirsoni/odfe-monitor-cli/monitor"
 	log "github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v2"
 )
 
 func check(err error) {

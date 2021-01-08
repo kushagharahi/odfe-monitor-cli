@@ -17,14 +17,15 @@ package commands
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 
+	"github.com/kennygrant/sanitize"
 	"github.com/mihirsoni/odfe-monitor-cli/destination"
 	"github.com/mihirsoni/odfe-monitor-cli/monitor"
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v3"
-	"github.com/kennygrant/sanitize"
+	"gopkg.in/yaml.v2"
 )
 
 var syncDestinatons bool
@@ -78,10 +79,11 @@ func writeMonitors(monitors map[string]monitor.Monitor) {
 		os.Mkdir(monitorsPath, 0755)
 	}
 	for name := range monitors {
-		monitorFile := filepath.Join(monitorsPath, sanitize.BaseName(name) + ".yaml")
+		monitorFile := filepath.Join(monitorsPath, sanitize.BaseName(name)+".yaml")
 		file, err := os.OpenFile(monitorFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 		check(err)
 		data, err := yaml.Marshal(monitors[name])
+		fmt.Println(monitors[name])
 		check(err)
 		file.Write(data)
 	}
