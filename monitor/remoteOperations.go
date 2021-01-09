@@ -21,8 +21,8 @@ import (
 	"strconv"
 
 	mapset "github.com/deckarep/golang-set"
-	"github.com/mihirsoni/odfe-monitor-cli/es"
 	"github.com/mihirsoni/odfe-monitor-cli/destination"
+	"github.com/mihirsoni/odfe-monitor-cli/es"
 	"github.com/pkg/errors"
 )
 
@@ -123,7 +123,7 @@ func (monitor *Monitor) Prepare(
 		for k := range monitor.Triggers[index].Actions {
 			currentAction := monitor.Triggers[index].Actions[k]
 			currentAction.ID = ""
-			remoteDestinationID := destinationsMap[currentAction.DestinationID].ID
+			remoteDestinationID := destinationsMap[strings.Tolower(currentAction.DestinationID)].ID
 			if remoteDestinationID == "" {
 				return errors.New("Specified destination " + currentAction.DestinationID +
 					" in monitor " + monitor.Name +
@@ -258,4 +258,4 @@ func mapIDAsKey(m map[string]destination.Destination) map[string]destination.Des
 		n[v.ID] = v
 	}
 	return n
-} 
+}
